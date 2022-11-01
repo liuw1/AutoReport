@@ -7,6 +7,11 @@ This is a set of automation test scripts based on [Robot Framework](https://gith
 pip install robotframework
 ```
 
+### Install python dependencies
+```
+pip install bs4
+```
+
 ## Run Test
 ```
 python main.py

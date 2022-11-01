@@ -17,7 +17,7 @@ class CustomLibrary:
         self.folder = folder
         
         # Clone source code from github
-        clone_cmd = ["git", "clone", url, folder]
+        clone_cmd = ["git", "clone", url, "-b script", folder]
         sub = subprocess.Popen(" ".join(clone_cmd), shell=True)
         return sub.wait()
 
@@ -52,7 +52,7 @@ class CustomLibrary:
         return sub.wait()
     
     def integration_test(self, cpus, memory, firmware):
-        cmd = ["bash", "sh_script/integration_tdx.sh", "-c", cpus, "-m", memory, "-f", firmware]
+        cmd = ["bash", "sh_script/integration_tdx_15.sh", "-c", cpus, "-m", memory, "-f", firmware]
         sub = subprocess.Popen(" ".join(cmd), shell=True)
         return sub.wait()
     

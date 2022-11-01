@@ -23,7 +23,7 @@ Build Final Binary with PE format test Payload
     Build Final Binary    pe_test
 
 Run PE format test TD Payload
-    Run Integration Test    1    2G    target/release/final-pe-test1.bin
+    Run Integration Test    1    1G    target/release/final-pe-test1.bin
     Run Integration Test    1    2G    target/release/final-pe-test2.bin
     Run Integration Test    2    4G    target/release/final-pe-test3.bin
     Run Integration Test    4    8G    target/release/final-pe-test4.bin
@@ -56,7 +56,7 @@ Run Secure Boot test - ELF format payload
     Run Integration Test    1    1G    target/release/final-elf-sb-unsigned.bin
 
 AFL Fuzzing
-    Afl    10
+    Afl    3600
 
 Libfuzzer Fuzzing
-    Libfuzzer    20
+    Libfuzzer    3600

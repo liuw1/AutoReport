@@ -172,7 +172,7 @@ class SendEmail(object):
         smtp_server = "smtp.intel.com"
         sender = "wei3.liu@intel.com" 
         
-        receivers = ['wei3.liu@intel.com', ]  
+        receivers = ['wei3.liu@intel.com', 'jiaqi.gao@intel.com', 'guoqingx.yang@intel.com', 'xiaoyu.lu@intel.com']  
         today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         detail_time = time.strftime('%H:%M:%S', time.localtime(time.time()))
         send_header = "TD-Shim Automation Test Report " + today + " " + detail_time 

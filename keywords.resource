@@ -30,8 +30,10 @@ Run Integration Test
 
 Afl
     [Arguments]    ${time}
-    Afl Test    ${time}
+    ${return_code}=    Afl Test    ${time}
+    Should Be Equal    ${return_code}    ${0}
 
 Libfuzzer
     [Arguments]    ${time}
-    Libfuzzer Test    ${time}
+    ${return_code}=    Libfuzzer Test    ${time}
+    Should Be Equal    ${return_code}    ${0}
