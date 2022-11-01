@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-
+import json
 import os
 import re
+import sys
 import time
 import email
 import smtplib
@@ -15,6 +16,9 @@ class SendEmail(object):
     def __init__(self):
         self.log_path = self.get_log_path('log.html')
         self.report_path = self.get_log_path('report.html')
+        self.sender = ''
+        self.receivers = ''
+        self.cc = ''
         self.head = '''
         <!doctype html>
         <html>
@@ -165,21 +169,50 @@ class SendEmail(object):
         content_dict = eval(content[0])
         return content_dict
 
+    def get_json_info(self):
+        try:
+            with open("config.json",'r') as f:
+                tmp_dict = json.load(f)
+
+            for k,v in tmp_dict['email'].items():
+                if k == "sender":
+                    self.sender = v
+                elif k == "to":
+                    if len(v) == 0:
+                        raise
+                    if len(v) == 1:
+                        self.receivers = [v[0] + ","]
+                    else:
+                        self.receivers = v
+                elif k == 'cc':
+                    if len(v) == 1 :
+                        self.cc = [v[0] + ","]
+                    else:
+                        self.cc = v
+                else:
+                    pass
+
+        except Exception as e:
+            print("Error : %s Exception %s" %(sys._getframe().f_code.co_name,e))
+
+
     def send_mail(self):
         log_path = self.log_path
         report_path = self.report_path
+        
+        self.get_json_info()
 
         smtp_server = "smtp.intel.com"
-        sender = "wei3.liu@intel.com" 
-        
-        receivers = ['wei3.liu@intel.com', 'jiaqi.gao@intel.com', 'guoqingx.yang@intel.com', 'xiaoyu.lu@intel.com']  
+        sender = self.sender
+
         today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         detail_time = time.strftime('%H:%M:%S', time.localtime(time.time()))
         send_header = "TD-Shim Automation Test Report " + today + " " + detail_time 
         msg = MIMEMultipart()
         msg['Subject'] = send_header
         msg['From'] = sender
-        msg['To'] = ",".join(receivers)
+        msg['To'] = ",".join(self.receivers)
+        msg['Cc'] = ",".join(self.cc)
 
         content = self.set_value_to_html()
         msg.attach(MIMEText(content, _subtype='html', _charset='utf-8'))
@@ -191,6 +224,7 @@ class SendEmail(object):
         report_file = MIMEApplication(open(report_path, 'rb').read())
         report_file.add_header('Content-Disposition', 'attachment', filename='report.html')
         msg.attach(report_file)
+        receivers = self.receivers + self.cc
 
         try:
             server = smtplib.SMTP(smtp_server)
@@ -199,3 +233,4 @@ class SendEmail(object):
             print('Sendmail successfully')
         except Exception as e:
             print('Sendmail fail', str(e))
+

@@ -1,6 +1,7 @@
 {
     "email": {
-        "to": [],
-        "cc": []
+        "sender":"guoqingx.yang@intel.com",
+        "to": ["guoqingx.yang@intel.com"],
+        "cc": ["wei3.liu@intel.com"]
     }
 }
