@@ -22,21 +22,37 @@ Build Final Binary With ELF Fromat TD Payload
 Build Final Binary with PE format test Payload
     Build Final Binary    pe_test
 
-Run PE format test TD Payload
+Run PE format test TD Payload (cpu: 1 memory: 1G)
     Run Integration Test    1    1G    target/release/final-pe-test1.bin
+
+Run PE format test TD Payload (cpu: 1 memory: 2G)
     Run Integration Test    1    2G    target/release/final-pe-test2.bin
+
+Run PE format test TD Payload (cpu: 2 memory: 4G)
     Run Integration Test    2    4G    target/release/final-pe-test3.bin
+
+Run PE format test TD Payload (cpu: 4 memory: 8G)
     Run Integration Test    4    8G    target/release/final-pe-test4.bin
+
+Run PE format test TD Payload (cpu: 8 memory: 16G)
     Run Integration Test    8    16G    target/release/final-pe-test5.bin
 
 Build Final Binary with ELF format test Payload
     Build Final Binary    elf_test
 
-Run ELF format test TD Payload
+Run ELF format test TD Payload (cpu: 1 memory: 1G)
     Run Integration Test    1    1G    target/release/final-elf-test1.bin
+
+Run ELF format test TD Payload (cpu: 1 memory: 2G)
     Run Integration Test    1    2G    target/release/final-elf-test2.bin
+
+Run ELF format test TD Payload (cpu: 2 memory: 4G)
     Run Integration Test    2    4G    target/release/final-elf-test3.bin
+
+Run ELF format test TD Payload (cpu: 4 memory: 8G)
     Run Integration Test    4    8G    target/release/final-elf-test4.bin
+
+Run ELF format test TD Payload (cpu: 8 memory: 16G)
     Run Integration Test    8    16G    target/release/final-elf-test5.bin
 
 Build Final Binary with PE format payload for secure boot test
@@ -56,7 +72,7 @@ Run Secure Boot test - ELF format payload
     Run Integration Test    1    1G    target/release/final-elf-sb-unsigned.bin
 
 AFL Fuzzing
-    Afl    3600
+    Afl    10
 
 Libfuzzer Fuzzing
-    Libfuzzer    3600
+    Libfuzzer    20

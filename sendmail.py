@@ -86,11 +86,19 @@ class SendEmail(object):
 		</p>
 			<ol><li style='mso-list:l1 level1 lfo3'><b><span
 		 style='font-size:11.0pt;font-family:"Calibri",sans-serif;mso-fareast-font-family:
-		 "Times New Roman"'>This is automation test report for TD-Shim</span></b>
+		 "Times New Roman"'>This is weekly automation test report for TD-Shim.</span></b>
+			</li>
+            <li style='mso-list:l1 level1 lfo3'><b><span
+		 style='font-size:11.0pt;font-family:"Calibri",sans-serif;mso-fareast-font-family:
+		 "Times New Roman"'>Test contatin functionality and fuzzing test.</span></b>
+			</li>
+            <li style='mso-list:l1 level1 lfo3'><b><span
+		 style='font-size:11.0pt;font-family:"Calibri",sans-serif;mso-fareast-font-family:
+		 "Times New Roman"'>Each fuzzing test case run about 1 hour.</span></b>
 			</li>
 			<li  style='mso-list:l1 level1 lfo3'><b><span
 		 style='font-size:11.0pt;font-family:"Calibri",sans-serif;mso-fareast-font-family:
-		 "Times New Roman"'>TD-Shim version: replace0</span></b>
+		 "Times New Roman"'>TD-Shim version: replace0.</span></b>
 			</li>
 			<li style='mso-list:l1 level1 lfo3'><b>
             <span style='font-size:11.0pt;font-family:"Calibri",sans-serif;mso-fareast-font-family:
@@ -134,7 +142,7 @@ class SendEmail(object):
         try:
             soup = BeautifulSoup(open(self.log_path, 'rb+'), "html.parser")
             pattern = re.compile(r'version_hash} = (\w+)')
-            # print(soup.decode())
+
             get_config_hash = re.search(pattern, soup.decode()).group(1)
             
             tmp_list = [] 
@@ -172,7 +180,7 @@ class SendEmail(object):
         smtp_server = "smtp.intel.com"
         sender = "wei3.liu@intel.com" 
         
-        receivers = ['wei3.liu@intel.com', 'jiaqi.gao@intel.com', 'guoqingx.yang@intel.com', 'xiaoyu.lu@intel.com']  
+        receivers = ['wei3.liu@intel.com',]  
         today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         detail_time = time.strftime('%H:%M:%S', time.localtime(time.time()))
         send_header = "TD-Shim Automation Test Report " + today + " " + detail_time 

@@ -41,13 +41,13 @@ class CustomLibrary:
         sub = subprocess.Popen(" ".join(build_cmd), shell=True)
         return sub.wait()
     
-    def afl_test(self, time):
-        afl_cmd = ["bash", "sh_script/fuzzing.sh", "-n", "afl_all", "-t", time]
+    def afl_test(self, tcs, time):
+        afl_cmd = ["bash", "sh_script/fuzzing.sh", "-n", tcs, "-t", time]
         sub = subprocess.Popen(" ".join(afl_cmd), shell=True)
         return sub.wait()
 
-    def libfuzzer_test(self, time):
-        libfuzzer_cmd = ["bash", "sh_script/fuzzing.sh", "-n", "libfuzzer_all", "-t", time]
+    def libfuzzer_test(self, tcs, time):
+        libfuzzer_cmd = ["bash", "sh_script/fuzzing.sh", "-n", tcs, "-t", time]
         sub = subprocess.Popen(" ".join(libfuzzer_cmd), shell=True)
         return sub.wait()
     
