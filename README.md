@@ -12,6 +12,16 @@ pip install robotframework
 pip install bs4
 ```
 
+### Configure the JSON file
+
+- **email**
+    ```
+    eg:
+        "sender":"xx.xx@xx.com",
+        "to": ["xx.xx@xx.com"],
+        "cc": ["xx.xx@xx.com"]
+    ```
+
 ## Run Test
 ```
 python main.py
