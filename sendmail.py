@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 import re
 import time
 import email
 import smtplib
+import json
 from bs4 import BeautifulSoup
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
@@ -172,22 +174,44 @@ class SendEmail(object):
         content = re.findall(r'stats\"] = (.+);', soup.decode())
         content_dict = eval(content[0])
         return content_dict
+    
+    def get_info_with_keys(self, key, subkey):
+        """
+        @return: lower string or list or other
+        """
+        try:
+            with open("./conf/config.json",'r') as f:
+                tmp_dict = json.load(f)
+            get_info_value = tmp_dict[key.lower()][subkey.lower()]
+            if isinstance(get_info_value,list):
+                tmp_list = []
+                for g in get_info_value:
+                    tmp_list.append(g.lower())
+                return tmp_list
+            elif isinstance(get_info_value,str):
+                get_info_value = get_info_value.lower()
+            else:
+                pass
+            return get_info_value
+
+        except Exception as e:
+            print("Error : %s Exception %s" %(sys._getframe().f_code.co_name,e))
 
     def send_mail(self):
         log_path = self.log_path
         report_path = self.report_path
 
         smtp_server = "smtp.intel.com"
-        sender = "wei3.liu@intel.com" 
+        sender = self.get_info_with_keys('email','sender')
         
-        receivers = ['wei3.liu@intel.com',]  
         today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         detail_time = time.strftime('%H:%M:%S', time.localtime(time.time()))
         send_header = "TD-Shim Automation Test Report " + today + " " + detail_time 
         msg = MIMEMultipart()
         msg['Subject'] = send_header
         msg['From'] = sender
-        msg['To'] = ",".join(receivers)
+        msg['To'] = ",".join(self.get_info_with_keys('email','to'))
+        msg['Cc'] = ",".join(self.get_info_with_keys('email','cc'))
 
         content = self.set_value_to_html()
         msg.attach(MIMEText(content, _subtype='html', _charset='utf-8'))
@@ -199,6 +223,7 @@ class SendEmail(object):
         report_file = MIMEApplication(open(report_path, 'rb').read())
         report_file.add_header('Content-Disposition', 'attachment', filename='report.html')
         msg.attach(report_file)
+        receivers = self.get_info_with_keys('email','to') + self.get_info_with_keys('email','cc')
 
         try:
             server = smtplib.SMTP(smtp_server)
